@@ -1,8 +1,8 @@
 def other_costs():
-    acp = 10
+    acpatj = 10
     ems = 20
     court = 42.50
-
+    return acpatj, ems, court
 
 def initial_fine(speed_limit):
     if speed_limit >= 65:
@@ -20,8 +20,10 @@ def speeding_ticket_calculator():
         else:
             speed_diff = veh_speed - speed_limit
             fine_speed = (speed_diff - 5) * 2
+            acpatj, ems, court = other_costs()
+            total_fine = fine_speed + initial_fine(speed_limit) + acpatj + ems + court
               
-            print(f"Your fine is ${fine_speed}+{acp}+{ems}{court}")
+            print(f"Your fine is ${fine_speed}+{acpatj}+{ems}+{court}")
             
     except ValueError:
             print("Invalid input. Please enter valid integer values for speed limit and vehicle speed.")
