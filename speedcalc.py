@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 #Point systems
+
 def points(speed_diff):
     if 6 <= speed_diff <= 10:
         return 2
@@ -39,17 +40,20 @@ def initial_fine(speed_limit):
 
 def speeding_ticket_calculator():
     try:
-        speed_limit = int(input("What is the speed limit?"))
-        veh_speed = int(input("What was the vehicle speed?"))
+        speed_limit = int(input("What is the speed limit?\n"))
+        veh_speed = int(input("What was the vehicle speed?\n"))
+        safezone = input("Was violation in School Zone or Active Work Zone (Y/N)?\n")
         
         if veh_speed <= speed_limit:
             print("Vehicle was within the posted speed limit.")
         else:
             speed_diff = veh_speed - speed_limit
-            fine_speed = (speed_diff - 5) * 2
+            fine_speed = max(0, (speed_diff - 5) * 2)
             jcpatj, ems, court = other_costs()
             surg = surcharge(speed_diff)
             fine = initial_fine(speed_limit) + fine_speed
+            if safezone == 'y' or safezone == 'yes':
+                fine *=2
             total_fine = fine + jcpatj + ems + court + surg
             
             print(f"Fine: ${fine}")
@@ -57,7 +61,7 @@ def speeding_ticket_calculator():
             print(f"Surcharge: ${surg}")
             print(f"Court Costs: ${court}")
             print(f"ACPATJ: ${jcpatj}")
-            print(f"Total: ${total_fine}")
+            print(f"Total Due: ${total_fine}")
             
             print(f"Points: {points(speed_diff)}")
     except ValueError:
